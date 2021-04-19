@@ -3,6 +3,7 @@ import { Box, useColorMode } from '@chakra-ui/react';
 import DarkModeSwitch from 'components/common/dark-mode-switch';
 import SvgRmrkApp from 'components/common/icons/svg-rmrk-app';
 import TopNavMenu from 'components/app/top-nav-menu';
+import ButtonCreate from 'components/app/nav-button-create';
 import dynamic from 'next/dynamic';
 
 const AccountSwitch = dynamic(() => import('components/app/account-switch'), {
@@ -35,25 +36,22 @@ const TopNav = () => {
         <Box mr={6}>
           <TopNavMenu />
         </Box>
-        <Box
-          display={['none', 'none', 'none', 'flex']}
-          alignItems="center"
-          justifyContent="flex-end"
-          w="20%"
-          minW="380px">
-          {/*<Box pr={4}>*/}
-          {/*  <GetKSMButton />*/}
-          {/*</Box>*/}
-          <Box pr={4}>
-            <AccountSwitch />
-          </Box>
-          {/*<Box pr={5}>*/}
-          {/*  <LanguageSwitch />*/}
-          {/*</Box>*/}
-          <DarkModeSwitch />
+        <Box pr={4}>
+          <ButtonCreate />
         </Box>
+
+        {/*<Box pr={4}>*/}
+        {/*  <GetKSMButton />*/}
+        {/*</Box>*/}
+        <Box pr={4}>
+          <AccountSwitch />
+        </Box>
+        {/*<Box pr={5}>*/}
+        {/*  <LanguageSwitch />*/}
+        {/*</Box>*/}
+        <DarkModeSwitch />
+        <ConnectAccountModal />
       </Box>
-      <ConnectAccountModal />
     </Box>
   );
 };

@@ -53,6 +53,12 @@ const theme = extendTheme({
         },
       },
     },
+
+    Button: {
+      baseStyle: {
+        borderRadius: '50px',
+      },
+    },
   },
 });
 

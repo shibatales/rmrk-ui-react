@@ -4,7 +4,7 @@ import { useAccountsStore } from 'lib/accounts/store';
 import { useScreenSize } from 'lib/hooks';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from 'lib/models/db';
-import { SettingsIcon } from '@chakra-ui/icons';
+import { IoWalletOutline } from 'react-icons/io5';
 import { useTranslation } from 'next-i18next';
 
 const AccountSwitch = () => {
@@ -25,10 +25,11 @@ const AccountSwitch = () => {
   return (
     <Box data-name="account-switch">
       <Button
-        colorScheme={'pink'}
-        size="xs"
+        size="sm"
         onClick={openAccountsModal}
-        rightIcon={<SettingsIcon />}>
+        rightIcon={<IoWalletOutline />}
+        borderRadius="50px"
+        variant="outline">
         {account?.web3Account ? accountCopy : walletCopy}
       </Button>
     </Box>

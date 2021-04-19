@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
 import TopNav from 'components/app/top-nav';
-// import Footer from 'components/app/footer/footer';
+import Footer from 'components/app/footer/footer';
 import BlockSyncIndicator from 'components/common/block-sync-indicator/block-sync-indicator';
 import { useRouter } from 'next/router';
 
@@ -59,9 +59,7 @@ const Page: FunctionComponent<IProps> = ({ children, title, ogTitle, ogDescripti
         {children}
       </Box>
 
-      {/*<Box position="sticky" bottom="0">*/}
-      {/*  <Footer />*/}
-      {/*</Box>*/}
+      <Footer />
     </>
   );
 };
