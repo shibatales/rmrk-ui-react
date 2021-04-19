@@ -25,7 +25,6 @@ const AccountSwitch = () => {
   return (
     <Box data-name="account-switch">
       <Button
-        colorScheme={'pink'}
         size="sm"
         onClick={openAccountsModal}
         rightIcon={<IoWalletOutline />}
