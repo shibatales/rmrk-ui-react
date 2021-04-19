@@ -28,7 +28,9 @@ const AccountSwitch = () => {
         colorScheme={'pink'}
         size="sm"
         onClick={openAccountsModal}
-        rightIcon={<IoWalletOutline />}>
+        rightIcon={<IoWalletOutline />}
+        borderRadius="50px"
+        variant="outline">
         {account?.web3Account ? accountCopy : walletCopy}
       </Button>
     </Box>
