@@ -26,7 +26,7 @@ const AccountSwitch = () => {
     <Box data-name="account-switch">
       <Button
         colorScheme={'pink'}
-        size="xs"
+        size="sm"
         onClick={openAccountsModal}
         rightIcon={<SettingsIcon />}>
         {account?.web3Account ? accountCopy : walletCopy}
