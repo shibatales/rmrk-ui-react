@@ -1,6 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import Page from 'components/common/page';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const PageHome = dynamic(() => import('components/home/pahe-home'), { ssr: false });
 
@@ -12,6 +14,14 @@ const Index = () => {
       <PageHome />
     </Page>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ locale = 'en' }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
 };
 
 export default Index;
