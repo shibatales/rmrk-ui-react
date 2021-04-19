@@ -11,7 +11,7 @@ const getWeb3Accounts = async (setAccounts: Function) => {
 };
 
 const checkEnabled = async (setW3Enabled: Function) => {
-  const enabledApps = await web3Enable('kanaria-rmrk');
+  const enabledApps = await web3Enable('rmrk-ui');
   setW3Enabled(enabledApps.length > 0);
 };
 
@@ -30,7 +30,9 @@ export const useConnectWeb3Account = () => {
   }, [ready, w3Enabled]);
 
   useEffect(() => {
-    checkEnabled(setW3Enabled);
+    if (!w3Enabled) {
+      checkEnabled(setW3Enabled);
+    }
   }, [w3Enabled]);
 
   const initialise = () => {
