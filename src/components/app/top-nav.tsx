@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, useColorMode } from '@chakra-ui/react';
+import { Box, useColorMode, Button } from '@chakra-ui/react';
 import DarkModeSwitch from 'components/common/dark-mode-switch';
 import SvgRmrkApp from 'components/common/icons/svg-rmrk-app';
 import TopNavMenu from 'components/app/top-nav-menu';
+import ButtonCreate from 'components/app/nav-button-create';
 
 const TopNav = () => {
   const isDark = useColorMode().colorMode === 'dark';
@@ -25,6 +26,9 @@ const TopNav = () => {
       <Box display="flex" alignItems="center">
         <Box mr={6}>
           <TopNavMenu />
+        </Box>
+        <Box pr={4}>
+          <ButtonCreate />
         </Box>
         <DarkModeSwitch />
       </Box>
