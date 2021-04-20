@@ -5,15 +5,15 @@ import Label from 'components/common/inputs/label';
 
 interface IProps {}
 
-const FormCollections = ({}: IProps) => (
+const FormChooseCollection = ({}: IProps) => (
   <Box data-name="form-collections">
     <Box mb={2}>
       <Label>Choose collection</Label>
     </Box>
-    <SimpleGrid columns={3} spacing={4}>
+    <SimpleGrid columns={3} spacing={6}>
       <CreateCollectionCard />
     </SimpleGrid>
   </Box>
 );
 
-export default FormCollections;
+export default FormChooseCollection;
