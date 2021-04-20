@@ -9,5 +9,6 @@
   "mint-nft-input-transferable-label": "Transferable (0 = no, 1 = yes, 1> = block from which transfers are OK)",
   "mint-nft-input-serialNumber-label": "Serial number (incremental, auto-pads to 16)",
   "mint-nft-input-metadata-required": "Please enter ipfs metadata",
-  "mint-nft-input-metadata-label": "Metadata* (IPFS hash)"
+  "mint-nft-input-metadata-label": "Metadata* (IPFS hash)",
+  "button-create": "Create"
 }
