@@ -16,7 +16,8 @@ const MenuOption: FunctionComponent<IProps> = ({ children, href, as }) => {
         as="a"
         data-name="menu-option"
         fontFamily="mono"
-        fontSize="md"
+        fontSize="sm"
+        fontWeight="semibold"
         color={isDark ? 'gray.300' : 'gray.800'}
         _hover={{
           color: 'pink.400',
