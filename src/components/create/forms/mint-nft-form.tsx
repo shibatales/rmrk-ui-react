@@ -4,6 +4,7 @@ import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
+import Dropzone from 'components/common/dropzone';
 
 const MintCollectionForm = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -50,6 +51,8 @@ const MintCollectionForm = () => {
 
   return (
     <Box data-name="mint-nft-form">
+      <Dropzone />
+
       <Box mb={4}>
         <FormHeading>Mint NFT</FormHeading>
       </Box>
