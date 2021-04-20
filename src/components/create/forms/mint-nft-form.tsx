@@ -6,21 +6,24 @@ import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
 import FormChooseCollections from 'components/create/form-choose-collection';
+import { useTranslation } from 'next-i18next';
 
 const MintCollectionForm = () => {
+  const { t } = useTranslation('page-create');
+
   const { register, handleSubmit, errors } = useForm();
 
   const formFieldList: IMintFormField[] = [
     {
       name: 'collection',
-      required: 'Please enter collection',
-      label: 'Collection*',
+      required: t('mint-nft-input-collection-required'),
+      label: t('mint-nft-input-collection-label'),
       error: errors.collection,
     },
     {
       name: 'name',
-      required: 'Please enter name',
-      label: 'Name*',
+      required: t('mint-nft-input-name-required'),
+      label: t('mint-nft-input-name-label'),
       error: errors.name,
     },
     {
@@ -32,16 +35,16 @@ const MintCollectionForm = () => {
     {
       type: 'number',
       name: 'transferable',
-      label: 'Transferable (0 = no, 1 = yes, 1> = block from which transfers are OK)',
+      label: t('mint-nft-input-transferable-label'),
     },
     {
       name: 'serialNumber',
-      label: 'Serial number (incremental, auto-pads to 16)',
+      label: t('mint-nft-input-serialNumber-label'),
     },
     {
       name: 'metadata',
-      required: 'Please enter ipfs metadata',
-      label: 'Metadata* (IPFS hash)',
+      required: t('mint-nft-input-metadata-required'),
+      label: t('mint-nft-input-metadata-label'),
       error: errors.metadata,
     },
   ];

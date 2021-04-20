@@ -1,3 +1,13 @@
 {
-  "page-title": "Create"
+  "page-title": "Create",
+  "mint-nft-input-collection-required": "Please enter collection",
+  "mint-nft-input-collection-label": "Collection*",
+  "mint-nft-input-name-required": "Please enter name",
+  "mint-nft-input-name-label": "Name*",
+  "mint-nft-input-instance-required": "Please enter instance",
+  "mint-nft-input-instance-label": "Instance*",
+  "mint-nft-input-transferable-label": "Transferable (0 = no, 1 = yes, 1> = block from which transfers are OK)",
+  "mint-nft-input-serialNumber-label": "Serial number (incremental, auto-pads to 16)",
+  "mint-nft-input-metadata-required": "Please enter ipfs metadata",
+  "mint-nft-input-metadata-label": "Metadata* (IPFS hash)"
 }
