@@ -10,5 +10,6 @@
   "mint-nft-input-serialNumber-label": "Serial number (incremental, auto-pads to 16)",
   "mint-nft-input-metadata-required": "Please enter ipfs metadata",
   "mint-nft-input-metadata-label": "Metadata* (IPFS hash)",
-  "button-create": "Create"
+  "button-create": "Create",
+  "mint-collection-modal-title": "Create collection"
 }

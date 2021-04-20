@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button } from '@chakra-ui/react';
-import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
@@ -52,9 +51,6 @@ const MintCollectionForm = () => {
 
   return (
     <Box data-name="mint-collection-form">
-      <Box mb={4}>
-        <FormHeading>Mint collection</FormHeading>
-      </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-collection-form">
         {formFieldList.map((item, i) => (
           <Box mt={i === 0 ? undefined : 4} key={`mint-collection-form-field-${item.name}`}>

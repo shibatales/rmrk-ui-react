@@ -3,9 +3,7 @@ import { Box, SimpleGrid } from '@chakra-ui/react';
 import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
 import Label from 'components/common/inputs/label';
 
-interface IProps {}
-
-const FormChooseCollection = ({}: IProps) => (
+const FormChooseCollection = () => (
   <Box data-name="form-collections">
     <Box mb={2}>
       <Label>Choose collection</Label>

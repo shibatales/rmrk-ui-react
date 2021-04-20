@@ -4,15 +4,15 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
 } from '@chakra-ui/react';
 import MintCollectionForm from 'components/create/forms/mint-collection-form';
 import { useCreateStore } from 'lib/create/store';
+import { useTranslation } from 'next-i18next';
 
 const CreateCollectionModal = () => {
+  const { t } = useTranslation('page-create');
   const { isCreateCollectionModalOpen, setIsCreateCollectionModalOpen } = useCreateStore(
     (state) => ({
       isCreateCollectionModalOpen: state.isCreateCollectionModalOpen,
@@ -28,16 +28,11 @@ const CreateCollectionModal = () => {
     <Modal isOpen={isCreateCollectionModalOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
+        <ModalHeader>{t('mint-collection-modal-title')}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody pb={6}>
           <MintCollectionForm />
         </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );
