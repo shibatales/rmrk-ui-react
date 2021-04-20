@@ -3,15 +3,18 @@ import dynamic from 'next/dynamic';
 import Page from 'components/common/page';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
-const MintPage = dynamic(() => import('components/create/create-page'), { ssr: false });
+const PageCreate = dynamic(() => import('components/create/page-create'), { ssr: false });
 
 const Create = () => {
-  const title = 'Mint';
+  const { t } = useTranslation('page-create');
+
+  const title = t('page-title');
 
   return (
     <Page title={title}>
-      <MintPage />
+      <PageCreate />
     </Page>
   );
 };
@@ -19,7 +22,7 @@ const Create = () => {
 export const getStaticProps: GetStaticProps = async ({ locale = 'en' }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      ...(await serverSideTranslations(locale, ['common', 'page-create'])),
     },
   };
 };
