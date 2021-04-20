@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
+import FormCollections from 'components/create/form-collections';
 
 const MintCollectionForm = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -56,6 +57,9 @@ const MintCollectionForm = () => {
       </Box>
       <Box mb={4}>
         <Dropzone />
+      </Box>
+      <Box mb={4}>
+        <FormCollections />
       </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-nft-form">
         {formFieldList.map((item, i) => (

@@ -26,7 +26,6 @@ const Dropzone = () => {
         borderRadius="20px">
         <input {...getInputProps()} />
         <Box
-          pt
           flexGrow={1}
           display="flex"
           flexDirection="column"

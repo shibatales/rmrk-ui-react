@@ -1,12 +1,15 @@
 import React from 'react';
 import PageContainer from 'components/common/page-container';
-import YourCollections from 'components/create/your-collections';
 import MintNftForm from 'components/create/forms/mint-nft-form';
+import { Box } from '@chakra-ui/react';
 
 const PageCreateSingle = () => (
   <PageContainer data-name="mint-page">
-    <MintNftForm />
-    <YourCollections />
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Box maxW="500px" w="100%">
+        <MintNftForm />
+      </Box>
+    </Box>
   </PageContainer>
 );
 

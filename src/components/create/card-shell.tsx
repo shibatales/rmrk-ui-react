@@ -6,9 +6,7 @@ const CardShell: FunctionComponent = ({ children }) => {
   return (
     <Box
       data-name="collectible-card-shell"
-      px={4}
-      pt={4}
-      pb={4}
+      p={4}
       w="100%"
       position="relative"
       borderWidth="1px"

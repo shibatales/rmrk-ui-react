@@ -7,16 +7,14 @@ const CreateCollectionCard = () => {
   return (
     <CardShell>
       <Box
-        minHeight="360px"
+        py={2}
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        alignItems="center">
-        <Box fontSize="md" fontFamily="mono">
-          Add new collection
-        </Box>
+        alignItems="center"
+        textAlign="center">
         <Box
-          mt={4}
+          mb={3}
           w="40px"
           h="40px"
           display="flex"
@@ -25,8 +23,12 @@ const CreateCollectionCard = () => {
           borderWidth="1px"
           borderStyle="solid"
           borderColor="gray.800"
-          borderRadius="100%">
+          borderRadius="100%"
+          fontSize="sm">
           <AddIcon />
+        </Box>
+        <Box fontSize="sm" fontFamily="mono" fontWeight="semibold">
+          Create collection
         </Box>
       </Box>
     </CardShell>
