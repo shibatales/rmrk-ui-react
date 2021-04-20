@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, SimpleGrid } from '@chakra-ui/react';
-import CreateCollectionCard from 'components/create/create-collection-card';
+import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
 import Label from 'components/common/inputs/label';
 
 interface IProps {}
