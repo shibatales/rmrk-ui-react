@@ -3,44 +3,46 @@ import { Box, Button } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
+import { useTranslation } from 'next-i18next';
 
 const MintCollectionForm = () => {
+  const { t } = useTranslation('page-create');
   const { register, handleSubmit, errors } = useForm();
 
   const formFieldList: IMintFormField[] = [
     {
       name: 'name',
-      required: 'Please enter name',
-      label: 'Name*',
+      required: t('mint-collection-input-name-required'),
+      label: t('mint-collection-input-name-label'),
       error: errors.name,
     },
     {
       type: 'number',
       name: 'max',
-      required: 'Please enter max',
-      label: 'Max*',
+      required: t('mint-collection-input-max-required'),
+      label: t('mint-collection-input-max-label'),
       error: errors.max,
     },
     {
       name: 'issuer',
-      required: 'Please enter issuer',
-      label: 'Issuer*',
+      required: t('mint-collection-input-issuer-required'),
+      label: t('mint-collection-input-issuer-label'),
       error: errors.issuer,
     },
     {
       name: 'symbol',
-      required: 'Please enter symbol',
-      label: 'Symbol*',
+      required: t('mint-collection-input-symbol-required'),
+      label: t('mint-collection-input-symbol-label'),
       error: errors.symbol,
     },
     {
       name: 'id',
-      label: 'ID (auto-generated)',
+      label: t('mint-collection-input-id-label'),
     },
     {
       name: 'metadata',
-      required: 'Please enter ipfs metadata',
-      label: 'Metadata (IPFS hash)',
+      required: t('mint-collection-input-metadata-required'),
+      label: t('mint-collection-input-metadata-label'),
       error: errors.metadata,
     },
   ];

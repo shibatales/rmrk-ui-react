@@ -11,5 +11,16 @@
   "mint-nft-input-metadata-required": "Please enter ipfs metadata",
   "mint-nft-input-metadata-label": "Metadata* (IPFS hash)",
   "button-create": "Create",
-  "mint-collection-modal-title": "Create collection"
+  "mint-collection-modal-title": "Create collection",
+  "mint-collection-input-name-required": "Please enter name",
+  "mint-collection-input-name-label": "Name*",
+  "mint-collection-input-max-required": "Please enter max",
+  "mint-collection-input-max-label": "Max*",
+  "mint-collection-input-issuer-required": "Please enter issuer",
+  "mint-collection-input-issuer-label": "Issuer*",
+  "mint-collection-input-symbol-required": "Please enter symbol",
+  "mint-collection-input-symbol-label": "Symbol*",
+  "mint-collection-input-id-label": "ID (auto-generated)",
+  "mint-collection-input-metadata-required": "Please enter ipfs metadata",
+  "mint-collection-input-metadata-label": "Metadata (IPFS hash)"
 }
