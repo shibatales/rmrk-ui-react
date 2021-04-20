@@ -12,8 +12,20 @@ const CreateCollectionCard = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-        <Box>Add new collection</Box>
-        <Box>
+        <Box fontSize="md" fontFamily="mono">
+          Add new collection
+        </Box>
+        <Box
+          mt={4}
+          w="40px"
+          h="40px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderWidth="1px"
+          borderStyle="solid"
+          borderColor="gray.800"
+          borderRadius="100%">
           <AddIcon />
         </Box>
       </Box>
