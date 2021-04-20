@@ -10,4 +10,8 @@
   "sync-banner-msg": "This might take a minute",
   "sync-banner-error": "Blockchain sync error, please refresh the page",
   "ramp-modal-heading": "Get KSM via Ramp network",
+  "dropzone-label": "Upload file",
+  "dropzone-title-drop-files": "Drop the files here",
+  "dropzone-title-drag-files": "Drag 'n' drop some files here or",
+  "dropzone-button-choose-file": "Choose file"
 }

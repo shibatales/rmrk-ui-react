@@ -2,8 +2,10 @@ import React, { useCallback } from 'react';
 import { Box, Button, useColorMode } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
 import Label from 'components/common/inputs/label';
+import { useTranslation } from 'next-i18next';
 
 const Dropzone = () => {
+  const { t } = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
@@ -13,7 +15,7 @@ const Dropzone = () => {
   return (
     <Box data-name="dropzone">
       <Box mb={2}>
-        <Label>Upload file</Label>
+        <Label>{t('dropzone-label')}</Label>
       </Box>
       <Box
         {...getRootProps()}
@@ -33,12 +35,12 @@ const Dropzone = () => {
           justifyContent="center">
           <Box fontFamily="mono" fontSize="sm">
             {isDragActive ? (
-              <Box>Drop the files here</Box>
+              <Box>{t('dropzone-title-drop-files')}</Box>
             ) : (
-              <Box>Drag 'n' drop some files here or</Box>
+              <Box>{t('dropzone-title-drag-files')}</Box>
             )}
           </Box>
-          <Button mt={10}>Choose file</Button>
+          <Button mt={10}>{t('dropzone-button-choose-file')}</Button>
         </Box>
       </Box>
     </Box>
