@@ -51,10 +51,12 @@ const MintCollectionForm = () => {
 
   return (
     <Box data-name="mint-nft-form">
-      <Box mb={4}>
+      <Box mt={6} mb={10}>
         <FormHeading>Create single nft</FormHeading>
       </Box>
-      <Dropzone />
+      <Box mb={4}>
+        <Dropzone />
+      </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-nft-form">
         {formFieldList.map((item, i) => (
           <Box mt={i === 0 ? undefined : 4} key={`mint-nft-form-field-${item.name}`}>

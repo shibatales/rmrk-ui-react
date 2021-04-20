@@ -12,7 +12,9 @@ const Dropzone = () => {
 
   return (
     <Box data-name="dropzone">
-      <Label mb={2}>Upload file</Label>
+      <Box mb={2}>
+        <Label>Upload file</Label>
+      </Box>
       <Box
         {...getRootProps()}
         w="100%"
