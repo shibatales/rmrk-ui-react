@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
-import FormChooseCollections from 'components/create/form-collections';
+import FormChooseCollections from 'components/create/form-choose-collection';
 
 const MintCollectionForm = () => {
   const { register, handleSubmit, errors } = useForm();

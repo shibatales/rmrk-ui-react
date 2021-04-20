@@ -38,7 +38,7 @@ const Dropzone = () => {
               <Box>Drag 'n' drop some files here or</Box>
             )}
           </Box>
-          <Button mt={4}>Choose file</Button>
+          <Button mt={10}>Choose file</Button>
         </Box>
       </Box>
     </Box>
