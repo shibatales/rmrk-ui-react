@@ -5,16 +5,18 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
-const PageCreate = dynamic(() => import('components/create/page-create'), { ssr: false });
+const PageCreateSingle = dynamic(() => import('components/create/page-create-single'), {
+  ssr: false,
+});
 
-const Create = () => {
+const CreateSingle = () => {
   const { t } = useTranslation('page-create');
 
   const title = t('page-title');
 
   return (
     <Page title={title}>
-      <PageCreate />
+      <PageCreateSingle />
     </Page>
   );
 };
@@ -27,4 +29,4 @@ export const getStaticProps: GetStaticProps = async ({ locale = 'en' }) => {
   };
 };
 
-export default Create;
+export default CreateSingle;

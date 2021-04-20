@@ -3,7 +3,7 @@ import { Link, Button } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 const ButtonCreate = () => (
-  <NextLink href="/create" passHref>
+  <NextLink href="/create/single" passHref>
     <Link
       _hover={{
         textDecoration: 'none',
