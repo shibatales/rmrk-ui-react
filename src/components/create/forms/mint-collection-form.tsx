@@ -67,7 +67,7 @@ const MintCollectionForm = () => {
         ))}
         <Box mt={6}>
           <Button type="submit" form="mint-collection-form" colorScheme="pink" variant="solid">
-            Turn into Remark
+            {t('button-create')}
           </Button>
         </Box>
       </Box>
