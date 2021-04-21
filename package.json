@@ -21,6 +21,7 @@
     "@polkadot/react-identicon": "^0.72.1",
     "@polkadot/util-crypto": "^6.0.5",
     "@polkadot/x-randomvalues": "^6.0.5",
+    "@ramp-network/ramp-instant-sdk": "^2.4.2",
     "@types/emoji-mart": "^3.0.4",
     "@types/multer": "^1.4.5",
     "@types/react-copy-to-clipboard": "^5.0.0",
