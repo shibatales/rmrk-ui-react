@@ -10,7 +10,7 @@ const getWeb3Accounts = async (setAccounts: Function) => {
   const allAccounts = await web3Accounts({ ss58Format: systemProperties.ss58Format });
   setAccounts(allAccounts);
   const account = await db.account.get(0);
-  if (!account) {
+  if (!account?.web3Account) {
     await db.account.update(0, { web3Account: allAccounts[0] });
   }
 };
