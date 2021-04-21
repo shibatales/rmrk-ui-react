@@ -4,13 +4,21 @@ import { useDropzone } from 'react-dropzone';
 import Label from 'components/common/inputs/label';
 import { useTranslation } from 'next-i18next';
 
-const Dropzone = () => {
+interface IProps {
+  setFormFile: (file: File) => void;
+}
+
+const Dropzone = ({ setFormFile }: IProps) => {
   const { t } = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFormFile(acceptedFiles[0]);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    maxSize: 10485760, // 10Mb
+  });
 
   return (
     <Box data-name="dropzone">

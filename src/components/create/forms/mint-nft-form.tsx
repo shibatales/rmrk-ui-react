@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
@@ -7,12 +7,13 @@ import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
 import FormChooseCollections from 'components/create/form-choose-collection';
 import { useTranslation } from 'next-i18next';
+import { useTransactionStatus } from 'lib/nft/transaction-status';
 
 const MintCollectionForm = () => {
   const { t } = useTranslation('page-create');
-
+  const [formFile, setFormFile] = useState<File>();
   const { register, handleSubmit, errors } = useForm();
-
+  const transactionStatus = useTransactionStatus('mint-nft');
   const formFieldList: IMintFormField[] = [
     {
       name: 'collection',
@@ -50,6 +51,10 @@ const MintCollectionForm = () => {
   ];
 
   const onSubmit = (data: any) => {
+    if (!formFile) {
+      transactionStatus.warning('Please upload some file');
+    }
+    // const ipfsUrl = await pinMetadataFile(formFile)
     console.log(data);
   };
 
@@ -59,7 +64,7 @@ const MintCollectionForm = () => {
         <FormHeading>Create single nft</FormHeading>
       </Box>
       <Box mb={4}>
-        <Dropzone />
+        <Dropzone setFormFile={setFormFile} />
       </Box>
       <Box mb={4}>
         <FormChooseCollections />
