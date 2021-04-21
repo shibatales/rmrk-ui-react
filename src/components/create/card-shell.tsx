@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { Box, useColorMode } from '@chakra-ui/react';
+import { useColorMode } from '@chakra-ui/react';
+import ContainerRounded from 'components/common/container-rounded';
 
 const CardShell: FunctionComponent = ({ children }) => {
   const isDark = useColorMode().colorMode === 'dark';
+
   return (
-    <Box
+    <ContainerRounded
       data-name="collectible-card-shell"
       p={4}
       w="100%"
@@ -12,11 +14,9 @@ const CardShell: FunctionComponent = ({ children }) => {
       borderWidth="1px"
       borderStyle="solid"
       borderColor={isDark ? 'gray.700' : 'gray:100'}
-      boxShadow="0 4px 8px 0 rgba(0,0,0,0.2)"
-      backgroundColor={isDark ? 'gray.600' : 'gray.50'}
-      borderRadius="20px">
+      boxShadow="0 4px 8px 0 rgba(0,0,0,0.2)">
       {children}
-    </Box>
+    </ContainerRounded>
   );
 };
 

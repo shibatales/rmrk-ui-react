@@ -35,7 +35,7 @@ const Dropzone = ({ setFormFile, imageOnly }: IProps) => {
         borderWidth="1px"
         borderStyle="dashed"
         borderColor={isDark ? 'white' : 'gray.500'}
-        borderRadius="20px">
+        borderRadius="3xl">
         <input {...getInputProps()} />
         <Box
           flexGrow={1}

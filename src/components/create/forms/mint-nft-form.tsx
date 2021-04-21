@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, useToast } from '@chakra-ui/react';
+import { Box, Button, SimpleGrid, useRadioGroup, useToast } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
@@ -9,6 +9,9 @@ import Dropzone from 'components/common/dropzone';
 import FormChooseCollections from 'components/create/form-choose-collection';
 import { useTranslation } from 'next-i18next';
 import { useTransactionStatus } from 'lib/nft/transaction-status';
+import Label from 'components/common/inputs/label';
+import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
+import RadioCard from 'components/common/inputs/radio-card';
 
 const MintCollectionForm = () => {
   const { t } = useTranslation('page-create');
@@ -32,12 +35,12 @@ const MintCollectionForm = () => {
   }, [formState]);
 
   const formFieldList: IMintFormField[] = [
-    {
-      name: 'collection',
-      required: t('mint-nft-input-collection-required'),
-      label: t('mint-nft-input-collection-label'),
-      error: errors.collection,
-    },
+    // {
+    //   name: 'collection',
+    //   required: t('mint-nft-input-collection-required'),
+    //   label: t('mint-nft-input-collection-label'),
+    //   error: errors.collection,
+    // },
     {
       name: 'name',
       required: t('mint-nft-input-name-required'),
@@ -67,6 +70,25 @@ const MintCollectionForm = () => {
     },
   ];
 
+  const collections = [
+    {
+      label: 'Collection 1',
+      src: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
+      value: '1',
+    },
+    {
+      label: 'Collection 2',
+      src:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc9m6wTQLJVsy8DPDft5Z38YDGMmiVGhd9sVcCX1wHWFRitMdK23SeEBLhwqO8YlI9MHk&usqp=CAU',
+      value: '2',
+    },
+  ];
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: 'collection',
+    defaultValue: '1',
+  });
+
   const onSubmit = (data: any) => {
     if (!formFile) {
       transactionStatus.warning('Please upload some file');
@@ -75,18 +97,38 @@ const MintCollectionForm = () => {
     console.log(data);
   };
 
+  const group = getRootProps();
+
   return (
     <Box data-name="mint-nft-form">
       <Box mt={6} mb={10}>
         <FormHeading>Create single nft</FormHeading>
       </Box>
-      <Box mb={4}>
-        <Dropzone setFormFile={setFormFile} />
-      </Box>
-      <Box mb={4}>
-        <FormChooseCollections />
-      </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-nft-form">
+        <Box mb={4}>
+          <Dropzone setFormFile={setFormFile} />
+        </Box>
+        <Box mb={4}>
+          <Box mb={2}>
+            <Label>Choose collection</Label>
+          </Box>
+          <SimpleGrid columns={3} spacing={6} {...group}>
+            <CreateCollectionCard />
+            {collections.map((item) => {
+              const radio = getRadioProps({ value: item.value });
+
+              return (
+                <RadioCard
+                  {...radio}
+                  key={item.value}
+                  label={item.label}
+                  img={item.src}
+                  ref={register}
+                />
+              );
+            })}
+          </SimpleGrid>
+        </Box>
         {formFieldList.map((item, i) => (
           <Box mt={i === 0 ? undefined : 4} key={`mint-nft-form-field-${item.name}`}>
             <Input
