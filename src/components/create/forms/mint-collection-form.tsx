@@ -72,7 +72,11 @@ const MintCollectionForm = () => {
           </Box>
         ))}
         <Box mt={4}>
-          <Textarea label="Description" name="description" ref={register} />
+          <Textarea
+            label={t('mint-collection-input-description-label')}
+            name="description"
+            ref={register}
+          />
         </Box>
         <Box mt={6}>
           <Button type="submit" form="mint-collection-form" colorScheme="pink" variant="solid">
