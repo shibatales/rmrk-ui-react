@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, useToast } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
@@ -12,8 +12,24 @@ import { useTransactionStatus } from 'lib/nft/transaction-status';
 const MintCollectionForm = () => {
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
-  const { register, handleSubmit, errors } = useForm();
   const transactionStatus = useTransactionStatus('mint-nft');
+  const { register, handleSubmit, errors, formState } = useForm();
+  const toast = useToast();
+
+  useEffect(() => {
+    const errorlist = Object.values(formState.errors);
+
+    if (errorlist.length > 0) {
+      toast({
+        title: 'Error',
+        description: errorlist[0].message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [formState]);
+
   const formFieldList: IMintFormField[] = [
     {
       name: 'collection',
