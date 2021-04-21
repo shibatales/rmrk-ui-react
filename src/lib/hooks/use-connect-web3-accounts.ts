@@ -3,11 +3,16 @@ import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { useAccountsStore } from 'lib/accounts/store';
 import { w3Store } from 'lib/w3/store';
+import { db } from 'lib/models/db';
 
 const getWeb3Accounts = async (setAccounts: Function) => {
   const { systemProperties } = w3Store.getState();
   const allAccounts = await web3Accounts({ ss58Format: systemProperties.ss58Format });
   setAccounts(allAccounts);
+  const account = await db.account.get(0);
+  if (!account) {
+    await db.account.update(0, { web3Account: allAccounts[0] });
+  }
 };
 
 const checkEnabled = async (setW3Enabled: Function) => {
