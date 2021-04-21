@@ -6,7 +6,7 @@ export const pinMetadataFile = async (file: File, metadata: NFTMetadata) => {
     const data = new FormData();
     data.append('files', file);
     data.append('metadata', JSON.stringify(metadata));
-    const ipfsUrl = await pinMetadata(data);
+    const { ipfsUrl } = await pinMetadata(data);
     return ipfsUrl;
   } catch (e) {
     // show error
