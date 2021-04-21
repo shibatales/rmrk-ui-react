@@ -3,6 +3,7 @@ import { Box, Button, useToast } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
+import Textarea from 'components/common/inputs/textarea';
 import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
 import FormChooseCollections from 'components/create/form-choose-collection';
@@ -97,6 +98,9 @@ const MintCollectionForm = () => {
             />
           </Box>
         ))}
+        <Box mt={4}>
+          <Textarea label="Description" name="description" ref={register} />
+        </Box>
         <Box mt={6}>
           <Button type="submit" form="mint-nft-form" colorScheme="pink" variant="solid">
             {t('button-create')}

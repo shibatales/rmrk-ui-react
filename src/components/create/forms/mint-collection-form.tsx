@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
 import { useTranslation } from 'next-i18next';
+import Textarea from 'components/common/inputs/textarea';
+import Dropzone from 'components/common/dropzone';
 
 const MintCollectionForm = () => {
   const { t } = useTranslation('page-create');
+  const [formFile, setFormFile] = useState<File>();
   const { register, handleSubmit, errors } = useForm();
 
   const formFieldList: IMintFormField[] = [
@@ -53,6 +56,9 @@ const MintCollectionForm = () => {
 
   return (
     <Box data-name="mint-collection-form">
+      <Box mb={4}>
+        <Dropzone setFormFile={setFormFile} />
+      </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-collection-form">
         {formFieldList.map((item, i) => (
           <Box mt={i === 0 ? undefined : 4} key={`mint-collection-form-field-${item.name}`}>
@@ -65,6 +71,9 @@ const MintCollectionForm = () => {
             />
           </Box>
         ))}
+        <Box mt={4}>
+          <Textarea label="Description" name="description" ref={register} />
+        </Box>
         <Box mt={6}>
           <Button type="submit" form="mint-collection-form" colorScheme="pink" variant="solid">
             {t('button-create')}
