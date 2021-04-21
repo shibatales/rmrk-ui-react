@@ -9,9 +9,8 @@ export const locales: TLocales = {
   //   value: 'ru',
   //   text: 'Rus',
   // },
-  it: {
-    value: 'it',
-    text: 'It',
-  },
+  // it: {
+  //   value: 'it',
+  //   text: 'It',
+  // },
 };
-
