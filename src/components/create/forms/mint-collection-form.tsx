@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { IMintFormField } from 'lib/types';
 import { useTranslation } from 'next-i18next';
+import Dropzone from 'components/common/dropzone';
 
 const MintCollectionForm = () => {
+  const [formFile, setFormFile] = useState<File>();
   const { t } = useTranslation('page-create');
   const { register, handleSubmit, errors } = useForm();
 
@@ -53,6 +55,9 @@ const MintCollectionForm = () => {
 
   return (
     <Box data-name="mint-collection-form">
+      <Box mb={4}>
+        <Dropzone setFormFile={setFormFile} imageOnly />
+      </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-collection-form">
         {formFieldList.map((item, i) => (
           <Box mt={i === 0 ? undefined : 4} key={`mint-collection-form-field-${item.name}`}>
