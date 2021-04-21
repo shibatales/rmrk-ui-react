@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Box, Button, useColorMode } from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
+import { Box, Button, useColorMode, Image } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
 import Label from 'components/common/inputs/label';
 import { useTranslation } from 'next-i18next';
@@ -7,13 +7,24 @@ import { useTranslation } from 'next-i18next';
 interface IProps {
   setFormFile: (file: File) => void;
   imageOnly?: boolean;
+  displayPreview?: boolean;
 }
 
-const Dropzone = ({ setFormFile, imageOnly }: IProps) => {
+type PreviewFile = File & { preview: string };
+
+const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
+  const [previews, setPreviews] = useState<PreviewFile[]>([]);
   const { t } = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFormFile(acceptedFiles[0]);
+    setPreviews(
+      acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      ),
+    );
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: imageOnly ? 'image/*' : undefined,
@@ -21,6 +32,14 @@ const Dropzone = ({ setFormFile, imageOnly }: IProps) => {
     maxFiles: 1,
     maxSize: 10485760, // 10Mb
   });
+
+  const thumbs = previews.map((file) => (
+    <Box key={file.name}>
+      <Box>
+        <Image src={file.preview} />
+      </Box>
+    </Box>
+  ));
 
   return (
     <Box data-name="dropzone">
@@ -59,6 +78,7 @@ const Dropzone = ({ setFormFile, imageOnly }: IProps) => {
           </Button>
         </Box>
       </Box>
+      {displayPreview && <Box>{thumbs}</Box>}
     </Box>
   );
 };

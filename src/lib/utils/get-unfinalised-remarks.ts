@@ -27,12 +27,17 @@ export const getUnfinalisedRemarks = (remarks: Remark[] = []): UnfinalisedRemark
     };
     switch (remark.interaction_type) {
       case OP_TYPES.MINT:
-        const collection = getCollectionFromRemark(remark);
-        if (collection?.id) {
-          unfinalisedRemark.id = collection.id;
-          unfinalisedRemark.opType = OP_TYPES.MINT;
-          unfinalisedRemarks.push(unfinalisedRemark);
+        try {
+          const collection = getCollectionFromRemark(remark);
+          if (collection?.id) {
+            unfinalisedRemark.id = collection.id;
+            unfinalisedRemark.opType = OP_TYPES.MINT;
+            unfinalisedRemarks.push(unfinalisedRemark);
+          }
+        } catch (error) {
+          // silent
         }
+
         break;
 
       case OP_TYPES.MINTNFT:

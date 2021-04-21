@@ -2,75 +2,63 @@ import React, { useState } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
-import { IMintFormField } from 'lib/types';
 import { useTranslation } from 'next-i18next';
 import Textarea from 'components/common/inputs/textarea';
 import Dropzone from 'components/common/dropzone';
+import { mintCollection } from 'lib/nft/mint-collection';
+import { useTransactionStatus } from 'lib/nft/transaction-status';
+
+export interface CollectionFormFields {
+  name: string;
+  max: string;
+  symbol: string;
+  description: string;
+}
 
 const MintCollectionForm = () => {
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
   const { register, handleSubmit, errors } = useForm();
+  const transactionStatus = useTransactionStatus('mint-collection');
 
-  const formFieldList: IMintFormField[] = [
-    {
-      name: 'name',
-      required: t('mint-collection-input-name-required'),
-      label: t('mint-collection-input-name-label'),
-      error: errors.name,
-    },
-    {
-      type: 'number',
-      name: 'max',
-      required: t('mint-collection-input-max-required'),
-      label: t('mint-collection-input-max-label'),
-      error: errors.max,
-    },
-    {
-      name: 'issuer',
-      required: t('mint-collection-input-issuer-required'),
-      label: t('mint-collection-input-issuer-label'),
-      error: errors.issuer,
-    },
-    {
-      name: 'symbol',
-      required: t('mint-collection-input-symbol-required'),
-      label: t('mint-collection-input-symbol-label'),
-      error: errors.symbol,
-    },
-    {
-      name: 'id',
-      label: t('mint-collection-input-id-label'),
-    },
-    {
-      name: 'metadata',
-      required: t('mint-collection-input-metadata-required'),
-      label: t('mint-collection-input-metadata-label'),
-      error: errors.metadata,
-    },
-  ];
-
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (collectionFields: CollectionFormFields) => {
+    mintCollection({ collectionFields, file: formFile, transactionStatus });
   };
+
+  const symbolRequired = t('mint-collection-input-symbol-required');
+  const nameRequired = t('mint-collection-input-name-required');
+  const maxRequired = t('mint-collection-input-max-required');
 
   return (
     <Box data-name="mint-collection-form">
       <Box mb={4}>
-        <Dropzone setFormFile={setFormFile} />
+        <Dropzone setFormFile={setFormFile} imageOnly displayPreview />
       </Box>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-collection-form">
-        {formFieldList.map((item, i) => (
-          <Box mt={i === 0 ? undefined : 4} key={`mint-collection-form-field-${item.name}`}>
-            <Input
-              type={item.type}
-              name={item.name}
-              ref={item.required ? register({ required: item.required }) : register}
-              label={item.label}
-              error={item.error}
-            />
-          </Box>
-        ))}
+        <Box mt={0}>
+          <Input
+            name="name"
+            ref={register({ required: nameRequired })}
+            label={t('mint-collection-input-name-label')}
+            error={errors.name}
+          />
+        </Box>
+        <Box mt={4}>
+          <Input
+            name="max"
+            ref={register({ required: maxRequired })}
+            label={t('mint-collection-input-max-label')}
+            error={errors.max}
+          />
+        </Box>
+        <Box mt={4}>
+          <Input
+            name="symbol"
+            ref={register({ required: symbolRequired })}
+            label={t('mint-collection-input-symbol-label')}
+            error={errors.symbol}
+          />
+        </Box>
         <Box mt={4}>
           <Textarea
             label={t('mint-collection-input-description-label')}
