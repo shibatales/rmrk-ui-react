@@ -6,15 +6,17 @@ import { useTranslation } from 'next-i18next';
 
 interface IProps {
   setFormFile: (file: File) => void;
+  imageOnly?: boolean;
 }
 
-const Dropzone = ({ setFormFile }: IProps) => {
+const Dropzone = ({ setFormFile, imageOnly }: IProps) => {
   const { t } = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFormFile(acceptedFiles[0]);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: imageOnly ? 'image/*' : undefined,
     onDrop,
     maxFiles: 1,
     maxSize: 10485760, // 10Mb
@@ -23,7 +25,7 @@ const Dropzone = ({ setFormFile }: IProps) => {
   return (
     <Box data-name="dropzone">
       <Box mb={2}>
-        <Label>{t('dropzone-label')}</Label>
+        <Label>{t(imageOnly ? 'dropzone-label-image' : 'dropzone-label-file')}</Label>
       </Box>
       <Box
         {...getRootProps()}
@@ -43,12 +45,18 @@ const Dropzone = ({ setFormFile }: IProps) => {
           justifyContent="center">
           <Box fontFamily="mono" fontSize="sm">
             {isDragActive ? (
-              <Box>{t('dropzone-title-drop-files')}</Box>
+              <Box>
+                {t('dropzone-title-drop-files', { count: 1, type: imageOnly ? 'image' : 'file' })}
+              </Box>
             ) : (
-              <Box>{t('dropzone-title-drag-files')}</Box>
+              <Box>
+                {t('dropzone-title-drag-files', { count: 1, type: imageOnly ? 'image' : 'file' })}
+              </Box>
             )}
           </Box>
-          <Button mt={10}>{t('dropzone-button-choose-file')}</Button>
+          <Button mt={10}>
+            {t('dropzone-button-choose-file', { type: imageOnly ? 'image' : 'file' })}
+          </Button>
         </Box>
       </Box>
     </Box>
