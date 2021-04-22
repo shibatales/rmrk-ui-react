@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button } from '@chakra-ui/react';
+import React, { ChangeEvent, useState } from 'react';
+import { Box, Button, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import { useTranslation } from 'next-i18next';
@@ -7,6 +7,7 @@ import Textarea from 'components/common/inputs/textarea';
 import Dropzone from 'components/common/dropzone';
 import { mintCollection } from 'lib/nft/mint-collection';
 import { useTransactionStatus } from 'lib/nft/transaction-status';
+import Label from 'components/common/inputs/label';
 
 export interface CollectionFormFields {
   name: string;
@@ -16,9 +17,10 @@ export interface CollectionFormFields {
 }
 
 const MintCollectionForm = () => {
+  const [unlimited, setUnlimited] = useState(true);
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setValue } = useForm();
   const transactionStatus = useTransactionStatus('mint-collection');
 
   const onSubmit = (collectionFields: CollectionFormFields) => {
@@ -28,6 +30,11 @@ const MintCollectionForm = () => {
   const symbolRequired = t('mint-collection-input-symbol-required');
   const nameRequired = t('mint-collection-input-name-required');
   const maxRequired = t('mint-collection-input-max-required');
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUnlimited(event.target.checked);
+    setValue('max', event.target.checked ? '0' : '1', { shouldValidate: true });
+  };
 
   return (
     <Box data-name="mint-collection-form">
@@ -43,14 +50,29 @@ const MintCollectionForm = () => {
             error={errors.name}
           />
         </Box>
+
         <Box mt={4}>
-          <Input
-            name="max"
-            ref={register({ required: maxRequired })}
-            label={t('mint-collection-input-max-label')}
-            error={errors.max}
-          />
+          <Box mb={1}>
+            <Label htmlFor="is-unlimited">{t('mint-collection-max-label')}</Label>
+          </Box>
+          <FormControl display="flex" alignItems="center" mb={2}>
+            <Switch id="is-unlimited" isChecked={unlimited} onChange={handleChange} />
+            <Box ml={2}>
+              <Label htmlFor="is-unlimited">{t('mint-collection-is-infinite-label')}</Label>
+            </Box>
+          </FormControl>
+
+          <Box display={unlimited ? 'none' : 'block'}>
+            <Input
+              name="max"
+              type="number"
+              ref={register({ required: maxRequired })}
+              label={t('mint-collection-input-max-label')}
+              error={errors.max}
+            />
+          </Box>
         </Box>
+
         <Box mt={4}>
           <Input
             name="symbol"

@@ -34,9 +34,9 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
   });
 
   const thumbs = previews.map((file) => (
-    <Box key={file.name}>
+    <Box key={file.name} mt={2} display="flex">
       <Box>
-        <Image src={file.preview} />
+        <Image src={file.preview} width="100%" />
       </Box>
     </Box>
   ));
@@ -62,23 +62,40 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center">
-          <Box fontFamily="mono" fontSize="sm">
-            {isDragActive ? (
-              <Box>
-                {t('dropzone-title-drop-files', { count: 1, type: imageOnly ? 'image' : 'file' })}
+          {displayPreview && thumbs && thumbs.length > 0 ? (
+            <Box
+              _hover={{
+                opacity: 0.7,
+                cursor: 'pointer',
+              }}>
+              {thumbs}
+            </Box>
+          ) : (
+            <>
+              <Box fontFamily="mono" fontSize="sm">
+                {isDragActive ? (
+                  <Box>
+                    {t('dropzone-title-drop-files', {
+                      count: 1,
+                      type: imageOnly ? 'image' : 'file',
+                    })}
+                  </Box>
+                ) : (
+                  <Box>
+                    {t('dropzone-title-drag-files', {
+                      count: 1,
+                      type: imageOnly ? 'image' : 'file',
+                    })}
+                  </Box>
+                )}
               </Box>
-            ) : (
-              <Box>
-                {t('dropzone-title-drag-files', { count: 1, type: imageOnly ? 'image' : 'file' })}
-              </Box>
-            )}
-          </Box>
-          <Button mt={10}>
-            {t('dropzone-button-choose-file', { type: imageOnly ? 'image' : 'file' })}
-          </Button>
+              <Button mt={10}>
+                {t('dropzone-button-choose-file', { type: imageOnly ? 'image' : 'file' })}
+              </Button>
+            </>
+          )}
         </Box>
       </Box>
-      {displayPreview && <Box>{thumbs}</Box>}
     </Box>
   );
 };

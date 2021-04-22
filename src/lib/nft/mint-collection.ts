@@ -10,6 +10,7 @@ import { polkadotApi } from 'lib/app/get-polkadot-api';
 import { useAccountsStore } from 'lib/accounts/store';
 import { getEncodedAddress } from 'lib/utils/get-encoded-address';
 import { signAndSendRemark } from 'lib/w3/transaction';
+import { validateCollection } from 'rmrk-tools/dist/tools/validate-remark';
 
 interface IProps {
   collectionFields: CollectionFormFields;
@@ -60,6 +61,8 @@ export const mintCollection = async ({ collectionFields, file, transactionStatus
     }
 
     const remark = collection.mint();
+    validateCollection(remark);
+
     await signAndSendRemark({
       remark,
       purchaseTransaction: null,
