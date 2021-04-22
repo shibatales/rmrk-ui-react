@@ -70,7 +70,7 @@ const MintCollectionForm = () => {
     },
   ];
 
-  const collections = [
+  const collections: { label: string; src: string; value: string | number }[] = [
     {
       label: 'Collection 1',
       src: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
@@ -87,6 +87,7 @@ const MintCollectionForm = () => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'collection',
     defaultValue: '1',
+    onChange: () => console.log('wow'),
   });
 
   const onSubmit = (data: any) => {
@@ -114,18 +115,10 @@ const MintCollectionForm = () => {
           </Box>
           <SimpleGrid columns={3} spacing={6} {...group}>
             <CreateCollectionCard />
-            {collections.map((item) => {
-              const radio = getRadioProps({ value: item.value });
+            {collections.map(({ value, label, src }) => {
+              const radio = getRadioProps({ value });
 
-              return (
-                <RadioCard
-                  {...radio}
-                  key={item.value}
-                  label={item.label}
-                  img={item.src}
-                  ref={register}
-                />
-              );
+              return <RadioCard {...radio} key={value} label={label} img={src} ref={register} />;
             })}
           </SimpleGrid>
         </Box>
