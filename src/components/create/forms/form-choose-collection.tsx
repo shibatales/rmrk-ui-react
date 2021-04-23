@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, SimpleGrid, useRadioGroup } from '@chakra-ui/react';
+import { Box, SimpleGrid, useRadioGroup, UseRadioProps } from '@chakra-ui/react';
 import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
 import Label from 'components/common/inputs/label';
 import RadioCard from 'components/common/inputs/radio-card';
@@ -9,7 +9,7 @@ interface IProps {
   register: UseFormMethods['register'];
 }
 
-const collections: { label: string; src: string; value: string | number }[] = [
+const collections: { label: string; src: string; value: string }[] = [
   {
     label: 'Collection 1',
     src: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
@@ -40,6 +40,7 @@ const FormChooseCollection = ({ register }: IProps) => {
       <SimpleGrid columns={3} spacing={6} {...group}>
         <CreateCollectionCard />
         {collections.map(({ value, label, src }) => {
+          // @ts-ignore - Chakra-ui inner types issue
           const radio = getRadioProps({ value });
 
           return <RadioCard {...radio} key={value} label={label} img={src} ref={register} />;
