@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Box, Button, useColorMode, Image } from '@chakra-ui/react';
-import { useDropzone } from 'react-dropzone';
+import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import Label from 'components/common/inputs/label';
 import { useTranslation } from 'next-i18next';
 
@@ -14,9 +14,11 @@ type PreviewFile = File & { preview: string };
 
 const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
   const [previews, setPreviews] = useState<PreviewFile[]>([]);
+  const [error, setError] = useState<FileError | null>(null);
   const { t } = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    setError(null);
     setFormFile(acceptedFiles[0]);
     setPreviews(
       acceptedFiles.map((file) =>
@@ -26,9 +28,20 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
       ),
     );
   }, []);
+
+  const onDropAccepted = useCallback(() => {
+    setError(null);
+  }, []);
+
+  const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
+    setError(fileRejections[0].errors?.[0]);
+  }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: imageOnly ? 'image/*' : undefined,
     onDrop,
+    onDropAccepted,
+    onDropRejected,
     maxFiles: 1,
     maxSize: 10485760, // 10Mb
   });
@@ -62,6 +75,11 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center">
+          {error && (
+            <Box color="red" fontWeight={600} mb={2}>
+              {error.code === 'file-too-large' ? 'File too large. Max size is 10Mb' : error.message}
+            </Box>
+          )}
           {displayPreview && thumbs && thumbs.length > 0 ? (
             <Box
               _hover={{
