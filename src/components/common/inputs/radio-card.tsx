@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Box, useRadio, RadioProps, Avatar, useRadioGroup } from '@chakra-ui/react';
+import { Box, useRadio, RadioProps, Avatar } from '@chakra-ui/react';
 import ContainerRounded from 'components/common/container-rounded';
 
 interface IProps extends RadioProps {
