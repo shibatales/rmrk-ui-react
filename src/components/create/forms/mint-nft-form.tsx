@@ -10,7 +10,7 @@ import FormChooseCollection from 'components/create/forms/form-choose-collection
 import { useTranslation } from 'next-i18next';
 import { useTransactionStatus } from 'lib/nft/transaction-status';
 
-const MintCollectionForm = () => {
+const MintNFTForm = () => {
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
   const transactionStatus = useTransactionStatus('mint-nft');
@@ -80,7 +80,11 @@ const MintCollectionForm = () => {
       <Box mt={6} mb={10}>
         <FormHeading>Create single nft</FormHeading>
       </Box>
-      <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-nft-form">
+      <Box
+        as="form"
+        onSubmit={handleSubmit(onSubmit)}
+        id="mint-nft-form"
+        name="mint-collection-form">
         <Box mb={4}>
           <Dropzone setFormFile={setFormFile} />
         </Box>
@@ -115,4 +119,4 @@ const MintCollectionForm = () => {
   );
 };
 
-export default MintCollectionForm;
+export default MintNFTForm;

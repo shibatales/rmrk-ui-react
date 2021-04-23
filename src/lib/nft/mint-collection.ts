@@ -50,7 +50,7 @@ export const mintCollection = async ({ collectionFields, file, transactionStatus
       max: parseInt(max),
       issuer,
       symbol,
-      id: Collection.generateId(pubKey, 'FOO'),
+      id: Collection.generateId(pubKey, symbol),
       metadata,
       changes: [],
     });
