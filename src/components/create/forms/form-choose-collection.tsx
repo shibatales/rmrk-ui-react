@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, SimpleGrid, useRadioGroup, UseFormMethods } from '@chakra-ui/react';
+import { Box, SimpleGrid, useRadioGroup } from '@chakra-ui/react';
 import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
 import Label from 'components/common/inputs/label';
 import RadioCard from 'components/common/inputs/radio-card';
+import { UseFormMethods } from 'react-hook-form';
 
 interface IProps {
-  register: UseFormMethods.register;
+  register: UseFormMethods['register'];
 }
 
 const collections: { label: string; src: string; value: string | number }[] = [

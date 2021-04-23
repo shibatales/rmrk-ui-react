@@ -2,7 +2,12 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import MenuOption from 'components/app/menu-option';
 
-const menuOptionList: { href: string; text: string }[] = [{ href: '/', text: 'Explore' }];
+const menuOptionList: { href: string; text: string }[] = [
+  { href: '/', text: 'Explore' },
+  { href: '/', text: 'My items' },
+  { href: '/', text: 'Following' },
+  { href: '/', text: 'Activity' },
+];
 
 const TopNavMenu = () => (
   <Box display="flex" alignItems="center">
