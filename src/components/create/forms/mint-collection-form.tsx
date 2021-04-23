@@ -38,17 +38,17 @@ const MintCollectionForm = () => {
     setValue('max', event.target.checked ? '0' : '1', { shouldValidate: true });
   };
 
-  // const submit = (event: React.SyntheticEvent) => {
-  //   event?.stopPropagation();
-  //   handleSubmit(onSubmit)(event);
-  // };
+  const submit = (event: React.SyntheticEvent) => {
+    event?.stopPropagation();
+    handleSubmit(onSubmit)(event);
+  };
 
   return (
     <Box data-name="mint-collection-form">
       <Box mb={4}>
         <Dropzone setFormFile={setFormFile} imageOnly displayPreview />
       </Box>
-      <Box as="form" onSubmit={handleSubmit(onSubmit)} id="mint-collection-form">
+      <Box as="form" onSubmit={submit} id="mint-collection-form">
         <Box mt={0}>
           <Input
             name="name"

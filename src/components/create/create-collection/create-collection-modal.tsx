@@ -8,24 +8,17 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import MintCollectionForm from 'components/create/forms/mint-collection-form';
-import { useCreateStore } from 'lib/create/store';
 import { useTranslation } from 'next-i18next';
 
-const CreateCollectionModal = () => {
+interface IProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+const CreateCollectionModal = ({ isOpen, onClose }: IProps) => {
   const { t } = useTranslation('page-create');
-  const { isCreateCollectionModalOpen, setIsCreateCollectionModalOpen } = useCreateStore(
-    (state) => ({
-      isCreateCollectionModalOpen: state.isCreateCollectionModalOpen,
-      setIsCreateCollectionModalOpen: state.setIsCreateCollectionModalOpen,
-    }),
-  );
-
-  const onClose = () => {
-    setIsCreateCollectionModalOpen(false);
-  };
 
   return (
-    <Modal isOpen={isCreateCollectionModalOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{t('mint-collection-modal-title')}</ModalHeader>

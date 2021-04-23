@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import { useCreateStore } from 'lib/create/store';
-import CreateCollectionModal from 'components/create/create-collection/create-collection-modal';
+
 import ContainerRounded from 'components/common/container-rounded';
+import CreateCollectionModal from 'components/create/create-collection/create-collection-modal';
 
 const CreateCollectionCard = () => {
-  const { setIsCreateCollectionModalOpen } = useCreateStore((state) => ({
-    setIsCreateCollectionModalOpen: state.setIsCreateCollectionModalOpen,
-  }));
+  const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
-    setIsCreateCollectionModalOpen(true);
+    setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
   };
 
   return (
     <>
-      <Box as="button" onClick={onClick}>
+      <Box onClick={onClick} cursor="pointer">
         <ContainerRounded
           px={4}
           py={6}
@@ -44,7 +46,7 @@ const CreateCollectionCard = () => {
           </Box>
         </ContainerRounded>
       </Box>
-      <CreateCollectionModal />
+      <CreateCollectionModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
