@@ -20,7 +20,7 @@ const MintCollectionForm = () => {
   const [unlimited, setUnlimited] = useState(true);
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm<CollectionFormFields>({
     defaultValues: { max: '0' },
   });
   const transactionStatus = useTransactionStatus('mint-collection');
