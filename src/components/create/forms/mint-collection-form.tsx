@@ -20,7 +20,7 @@ const MintCollectionForm = () => {
   const [unlimited, setUnlimited] = useState(true);
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm<CollectionFormFields>({
     defaultValues: { max: '0' },
   });
   const transactionStatus = useTransactionStatus('mint-collection');
@@ -48,7 +48,7 @@ const MintCollectionForm = () => {
       <Box mb={4}>
         <Dropzone setFormFile={setFormFile} imageOnly displayPreview />
       </Box>
-      <Box as="form" onSubmit={submit} id="mint-collection-form" name="mint-collection-form">
+      <Box as="form" onSubmit={submit} id="mint-collection-form">
         <Box mt={0}>
           <Input
             name="name"

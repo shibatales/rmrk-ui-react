@@ -25,8 +25,8 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) 
 }
 
 const upload = multer({
-  // 10Mb in bytes
-  limits: { fileSize: 10485760 },
+  // 20Mb in bytes
+  limits: { fileSize: 20971520 },
 });
 
 type NextApiRequestWithFormData = NextApiRequest & {

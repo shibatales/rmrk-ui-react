@@ -5,7 +5,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from 'lib/models/db';
 
 const CuratedPicks = () => {
-  const nfts = useLiveQuery(() => db.nfts.limit(50).reverse().toArray());
+  const nfts = useLiveQuery(() => db.nfts.limit(50).toArray());
 
   return (
     <Box data-name="common-list-section">

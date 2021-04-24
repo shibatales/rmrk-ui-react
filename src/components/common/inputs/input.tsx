@@ -11,17 +11,25 @@ interface IProps {
   name: string;
   error?: FieldError;
   defaultValue?: string;
+  placeholder?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, IProps>(
-  ({ defaultValue, id, label, type, name, error }, ref) => (
+  ({ defaultValue, placeholder, id, label, type, name, error }, ref) => (
     <Box data-name="input">
       {label && (
         <Box mb={1}>
           <Label htmlFor={id}>{label}</Label>
         </Box>
       )}
-      <InputChakra type={type} name={name} id={id} ref={ref} defaultValue={defaultValue} />
+      <InputChakra
+        type={type}
+        name={name}
+        id={id}
+        ref={ref}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+      />
       {error && (
         <Box mt={1}>
           <Error>{error.message}</Error>

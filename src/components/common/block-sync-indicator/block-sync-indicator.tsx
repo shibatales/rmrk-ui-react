@@ -11,7 +11,7 @@ const BlockSyncIndicator = () => {
   const [timeLeft, setTimeLeft] = useState<number>(30);
   const [timerExpired, setTimerExpired] = useState<boolean>(false);
 
-  const { isBlocksSynced, isBlocksSyncError } = useDexieStore((state) => ({
+  const { isBlocksSynced, isBlocksSyncError,  } = useDexieStore((state) => ({
     isBlocksSynced: state.isBlocksSynced,
     isBlocksSyncError: state.isBlocksSyncError,
   }));
@@ -26,7 +26,8 @@ const BlockSyncIndicator = () => {
     }
   }, [timeLeft]);
 
-  const isDark = useColorMode().colorMode === 'dark';
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
 
   const animationValies: Record<TransitionStatus, string> = {
     entering: '100%',
@@ -79,9 +80,10 @@ const BlockSyncIndicator = () => {
             <FaExclamationTriangle />
           ) : (
             <CircularProgress
-              isIndeterminate
               color={isDark ? 'gray.800' : 'white'}
               trackColor={isDark ? 'white' : 'gray.800'}
+              isIndeterminate
+              value={!isBlocksSynced ? 75 : 100}
             />
           )}
         </Box>

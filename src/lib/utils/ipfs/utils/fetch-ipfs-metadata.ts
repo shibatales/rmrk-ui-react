@@ -1,10 +1,13 @@
 import { fetchIpfsNftData, sanitizeIpfsUrl, getIpfsImage } from 'lib/utils/ipfs/utils/index';
-import { NFT } from 'lib/models/NFT';
 import { NFTMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/nft';
+import { CollectionMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/collection';
 
-export const fetchIpfsMetadata = async (nft: NFT, ipfsNode?: any): Promise<NFTMetadata | null> => {
+export const fetchIpfsMetadata = async (
+  metadatUril?: string,
+  ipfsNode?: any,
+): Promise<NFTMetadata | CollectionMetadata | null> => {
   try {
-    const response = await fetchIpfsNftData(nft, ipfsNode);
+    const response = await fetchIpfsNftData(metadatUril, ipfsNode);
     if (response) {
       const { data, provider } = response;
 
