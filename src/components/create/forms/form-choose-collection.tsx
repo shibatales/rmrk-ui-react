@@ -4,6 +4,10 @@ import CreateCollectionCard from 'components/create/create-collection/create-col
 import Label from 'components/common/inputs/label';
 import RadioCard from 'components/common/inputs/radio-card';
 import { UseFormMethods } from 'react-hook-form';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from 'lib/models/db';
+import { useEncodedUserAddress } from 'lib/accounts/use-encoded-address';
+import { Collection } from 'lib/models/Collection';
 
 interface IProps {
   register: UseFormMethods['register'];
@@ -24,6 +28,18 @@ const collections: { label: string; src: string; value: string }[] = [
 ];
 
 const FormChooseCollection = ({ register }: IProps) => {
+  const encodeduserAddress = useEncodedUserAddress();
+  const userCollections = useLiveQuery(
+    () =>
+      db.collections
+        .where({ issuer: encodeduserAddress || '' })
+        .reverse()
+        .toArray(),
+    [encodeduserAddress],
+  );
+
+  console.log('userCollections', userCollections);
+
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'collection',
     defaultValue: '1',
@@ -41,12 +57,16 @@ const FormChooseCollection = ({ register }: IProps) => {
       <SimpleGrid columns={3} spacing={6} {...group}>
         <CreateCollectionCard />
 
-        {collections.map(({ value, label, src }) => {
-          // @ts-ignore - Chakra-ui inner types issue
-          const radio = getRadioProps({ value });
+        {userCollections && (
+          <>
+            {userCollections.map((collection: Collection) => {
+              // @ts-ignore - Chakra-ui inner types issue
+              const radio = getRadioProps({ value: collection.id });
 
-          return <RadioCard {...radio} key={value} label={label} img={src} ref={register} />;
-        })}
+              return <RadioCard {...radio} collection={collection} ref={register} />;
+            })}
+          </>
+        )}
       </SimpleGrid>
     </Box>
   );

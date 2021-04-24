@@ -19,7 +19,7 @@ const NftBlock = ({ nft, nft: { id, sn, owner, instance } }: IProps) => {
 
   useEffect(() => {
     const getImg = async () => {
-      const response = await fetchIpfsMetadata(nft);
+      const response = await fetchIpfsMetadata(nft?.metadata);
 
       setMetadata(response);
     };

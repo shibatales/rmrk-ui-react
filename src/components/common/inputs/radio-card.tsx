@@ -1,17 +1,30 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Box, useRadio, RadioProps, Avatar } from '@chakra-ui/react';
 import ContainerRounded from 'components/common/container-rounded';
+import { Collection } from 'lib/models/Collection';
+import { CollectionMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/collection';
+import { fetchIpfsMetadata } from 'lib/utils/ipfs/utils';
 
 interface IProps extends RadioProps {
-  img?: string;
-  label: string;
+  collection: Collection;
 }
 
 const RadioCard = forwardRef<HTMLInputElement, IProps>((props, ref) => {
-  const { img, label } = props;
+  const { collection } = props;
   const { getInputProps, getCheckboxProps } = useRadio(props);
   const input = getInputProps();
   const checkbox = getCheckboxProps();
+
+  const [metadata, setMetadata] = useState<CollectionMetadata | null>(null);
+
+  useEffect(() => {
+    const getImg = async () => {
+      const response = await fetchIpfsMetadata(collection?.metadata);
+      setMetadata(response);
+    };
+
+    getImg();
+  }, [collection]);
 
   return (
     <Box as="label" data-name="radio-card" display="flex">
@@ -33,9 +46,17 @@ const RadioCard = forwardRef<HTMLInputElement, IProps>((props, ref) => {
         }}
         px={4}
         py={6}>
-        {img && <Avatar size="md" name={label} src={img} borderRadius="100%" mb={3} />}
+        {metadata?.image && (
+          <Avatar
+            size="md"
+            name={collection.name}
+            src={metadata.image}
+            borderRadius="100%"
+            mb={3}
+          />
+        )}
         <Box fontSize="sm" fontFamily="mono" fontWeight="semibold">
-          {label}
+          {collection.name}
         </Box>
       </ContainerRounded>
     </Box>

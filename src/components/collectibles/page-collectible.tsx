@@ -30,7 +30,7 @@ const PageCollectible = ({ id }: IProps) => {
   const { isMd } = useScreenSize();
 
   const getNftData = async () => {
-    const response = await fetchIpfsMetadata(nft!);
+    const response = await fetchIpfsMetadata(nft?.metadata);
     if (response) {
       setMetadata(response);
     }

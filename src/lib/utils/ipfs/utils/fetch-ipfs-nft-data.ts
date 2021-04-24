@@ -1,15 +1,15 @@
-import { NFT } from 'lib/models/NFT';
 import { sanitizeIpfsUrl, getIpfsJson } from 'lib/utils/ipfs/utils/index';
 import { IPFS_PROVIDERS } from 'lib/common/ipfs-provider-links';
 import { IIpfsProviders } from 'lib/types';
 import { NFTMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/nft';
+import { CollectionMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/collection';
 
 export const fetchIpfsNftData = async (
-  nft: NFT,
+  metadataUri?: string,
   ipfsNode?: any,
-): Promise<{ data: NFTMetadata; provider?: keyof IIpfsProviders } | null> => {
+): Promise<{ data: NFTMetadata | CollectionMetadata; provider?: keyof IIpfsProviders } | null> => {
   try {
-    const gatewayUrl = sanitizeIpfsUrl(nft.metadata!, IPFS_PROVIDERS.cloudflare);
+    const gatewayUrl = sanitizeIpfsUrl(metadataUri!, IPFS_PROVIDERS.cloudflare);
     const response = await fetch(gatewayUrl);
 
     if (response.status === 200) {
@@ -23,7 +23,7 @@ export const fetchIpfsNftData = async (
   }
 
   try {
-    const gatewayUrl = sanitizeIpfsUrl(nft.metadata!, IPFS_PROVIDERS.pinata);
+    const gatewayUrl = sanitizeIpfsUrl(metadataUri!, IPFS_PROVIDERS.pinata);
     const response = await fetch(gatewayUrl);
 
     if (response.status === 200) {
@@ -37,7 +37,7 @@ export const fetchIpfsNftData = async (
   }
 
   try {
-    const gatewayUrl = sanitizeIpfsUrl(nft.metadata!, IPFS_PROVIDERS.ipfs);
+    const gatewayUrl = sanitizeIpfsUrl(metadataUri!, IPFS_PROVIDERS.ipfs);
     const response = await fetch(gatewayUrl);
 
     if (response.status === 200) {
@@ -52,7 +52,7 @@ export const fetchIpfsNftData = async (
 
   if (ipfsNode) {
     try {
-      const response = await getIpfsJson(nft, ipfsNode);
+      const response = await getIpfsJson(ipfsNode, metadataUri);
       if (response) {
         return { data: response };
       }

@@ -1,11 +1,15 @@
-import { NFT } from 'lib/models/NFT';
 import { getIpfsCid } from 'lib/utils/ipfs/utils/index';
+import { NFTMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/nft';
+import { CollectionMetadata } from 'rmrk-tools/dist/rmrk1.0.0/classes/collection';
 
-export const getIpfsJson = async (nft: NFT, ipfsNode: any) => {
-  if (!nft || !nft.metadata || !ipfsNode) return;
+export const getIpfsJson = async (
+  ipfsNode: any,
+  metadataUri?: string,
+): Promise<NFTMetadata | CollectionMetadata | null> => {
+  if (!metadataUri || !ipfsNode) return null;
 
   try {
-    const cid = getIpfsCid(nft.metadata);
+    const cid = getIpfsCid(metadataUri);
     const stream = ipfsNode.cat(cid);
     let data = '';
 
@@ -16,5 +20,6 @@ export const getIpfsJson = async (nft: NFT, ipfsNode: any) => {
     return JSON.parse(data);
   } catch (error) {
     console.log('FAILED TO FETCH JSON FROM IPFS:', { error });
+    return null;
   }
 };

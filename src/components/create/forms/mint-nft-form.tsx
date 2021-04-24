@@ -50,21 +50,6 @@ const MintNFTForm = () => {
       label: 'Instance*',
       error: errors.instance,
     },
-    {
-      type: 'number',
-      name: 'transferable',
-      label: t('mint-nft-input-transferable-label'),
-    },
-    {
-      name: 'serialNumber',
-      label: t('mint-nft-input-serialNumber-label'),
-    },
-    {
-      name: 'metadata',
-      required: t('mint-nft-input-metadata-required'),
-      label: t('mint-nft-input-metadata-label'),
-      error: errors.metadata,
-    },
   ];
 
   const onSubmit = (data: any) => {
