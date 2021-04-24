@@ -8,12 +8,14 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from 'lib/models/db';
 import { useEncodedUserAddress } from 'lib/accounts/use-encoded-address';
 import { Collection } from 'lib/models/Collection';
+import { useTranslation } from 'next-i18next';
 
 interface IProps {
   register: UseFormMethods['register'];
 }
 
 const FormChooseCollection = ({ register }: IProps) => {
+  const { t } = useTranslation('page-create');
   const encodeduserAddress = useEncodedUserAddress();
   const userCollections = useLiveQuery(
     () =>
@@ -26,11 +28,10 @@ const FormChooseCollection = ({ register }: IProps) => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'collection',
-    defaultValue: '1',
-    onChange: () => console.log('wow'),
   });
 
   const group = getRootProps();
+  const collectionRequired = t('mint-nft-input-collection-required');
 
   return (
     <Box data-name="form-collections">
@@ -46,8 +47,14 @@ const FormChooseCollection = ({ register }: IProps) => {
             {userCollections.map((collection: Collection) => {
               // @ts-ignore - Chakra-ui inner types issue
               const radio = getRadioProps({ value: collection.id });
-
-              return <RadioCard {...radio} collection={collection} ref={register} />;
+              return (
+                <RadioCard
+                  {...radio}
+                  collection={collection}
+                  ref={register({ required: collectionRequired })}
+                  key={collection.id}
+                />
+              );
             })}
           </>
         )}

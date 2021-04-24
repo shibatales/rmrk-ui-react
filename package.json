@@ -50,6 +50,7 @@
     "react-preloader-icon": "^1.0.0",
     "react-transition-group": "^4.4.1",
     "rmrk-tools": "^0.1.10",
+    "slugify": "^1.5.0",
     "subscriptions-transport-ws": "^0.9.18",
     "uint8-to-base64": "^0.2.0",
     "zustand": "^3.3.3"

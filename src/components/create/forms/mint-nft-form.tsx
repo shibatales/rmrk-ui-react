@@ -1,20 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, useToast } from '@chakra-ui/react';
+import { Box, Button, IconButton, useToast } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm, Controller, NestedValue } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import Textarea from 'components/common/inputs/textarea';
-import { IMintFormField } from 'lib/types';
 import Dropzone from 'components/common/dropzone';
 import FormChooseCollection from 'components/create/forms/form-choose-collection';
 import { useTranslation } from 'next-i18next';
 import { useTransactionStatus } from 'lib/nft/transaction-status';
+import Label from 'components/common/inputs/label';
+import { AddIcon } from '@chakra-ui/icons';
+
+interface Attributes {
+  key: string;
+  value: string;
+}
+
+export interface NFTFormFields {
+  name: string;
+  description: string;
+  attributes: NestedValue<Attributes[]>;
+}
 
 const MintNFTForm = () => {
   const { t } = useTranslation('page-create');
   const [formFile, setFormFile] = useState<File>();
   const transactionStatus = useTransactionStatus('mint-nft');
-  const { register, handleSubmit, errors, formState } = useForm();
+  const { register, handleSubmit, errors, formState, control } = useForm<NFTFormFields>({
+    defaultValues: {
+      attributes: [{ key: '', value: '' }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray<Attributes>({
+    control,
+    name: 'attributes',
+  });
   const toast = useToast();
 
   useEffect(() => {
@@ -23,7 +43,7 @@ const MintNFTForm = () => {
     if (errorlist.length > 0) {
       toast({
         title: 'Error',
-        description: errorlist[0].message,
+        description: errorlist?.[0]?.message,
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -31,26 +51,7 @@ const MintNFTForm = () => {
     }
   }, [formState]);
 
-  const formFieldList: IMintFormField[] = [
-    // {
-    //   name: 'collection',
-    //   required: t('mint-nft-input-collection-required'),
-    //   label: t('mint-nft-input-collection-label'),
-    //   error: errors.collection,
-    // },
-    {
-      name: 'name',
-      required: t('mint-nft-input-name-required'),
-      label: t('mint-nft-input-name-label'),
-      error: errors.name,
-    },
-    {
-      name: 'instance',
-      required: 'Please enter instance',
-      label: 'Instance*',
-      error: errors.instance,
-    },
-  ];
+  const nameRequiredMessage = t('mint-nft-input-name-required');
 
   const onSubmit = (data: any) => {
     if (!formFile) {
@@ -76,17 +77,15 @@ const MintNFTForm = () => {
         <Box mb={4}>
           <FormChooseCollection register={register} />
         </Box>
-        {formFieldList.map((item, i) => (
-          <Box mt={i === 0 ? undefined : 4} key={`mint-nft-form-field-${item.name}`}>
-            <Input
-              type={item.type}
-              name={item.name}
-              ref={item.required ? register({ required: item.required }) : register}
-              label={item.label}
-              error={item.error}
-            />
-          </Box>
-        ))}
+        <Box mt={0}>
+          <Input
+            type="string"
+            name="name"
+            ref={register({ required: nameRequiredMessage })}
+            label={t('mint-nft-input-name-label')}
+            error={errors.name}
+          />
+        </Box>
         <Box mt={4}>
           <Textarea
             label={t('mint-nft-input-description-label')}
@@ -94,6 +93,49 @@ const MintNFTForm = () => {
             ref={register}
           />
         </Box>
+        <Box mt={4}>
+          <Box mb={1}>
+            <Label htmlFor="is-unlimited">{t('mint-nft-input-attributes-label')}</Label>
+          </Box>
+          {fields.map((item, index) => {
+            return (
+              <Box key={item.id} display="flex" mt={4}>
+                <Box mr={2}>
+                  <Input
+                    type="string"
+                    name={`attributes.${index}.key`}
+                    ref={register({ required: nameRequiredMessage })}
+                    placeholder="Color"
+                  />
+                </Box>
+
+                <Box mr={2}>
+                  <Input
+                    type="string"
+                    name={`attributes.${index}.value`}
+                    ref={register({ required: nameRequiredMessage })}
+                    placeholder="Red"
+                  />
+                </Box>
+                {index === fields.length - 1 && (
+                  <Box>
+                    <IconButton
+                      onClick={() => {
+                        append({ key: '', value: '' });
+                      }}
+                      variant="outline"
+                      aria-label="Add another attribute"
+                      fontSize="14px"
+                      isRound
+                      icon={<AddIcon />}
+                    />
+                  </Box>
+                )}
+              </Box>
+            );
+          })}
+        </Box>
+
         <Box mt={6}>
           <Button type="submit" form="mint-nft-form" colorScheme="pink" variant="solid">
             {t('button-create')}
