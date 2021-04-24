@@ -32,7 +32,7 @@ const MintNFTForm = () => {
     },
   });
   const nft = useLiveQuery(() =>
-    db.nfts.where({ collection: 'b6dd45ba18782cf43b-VINYL5' }).first(),
+    db.nfts.where({ collection: 'b6dd45ba18782cf43b-VINYL5' }).toArray(),
   );
   console.log('nft', nft);
   const { fields, append, remove } = useFieldArray<Attribute>({

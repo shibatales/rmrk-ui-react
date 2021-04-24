@@ -37,7 +37,7 @@ const padSerialNumber = (currentCount: number) => {
 };
 
 const getInstance = (name: string) => {
-  return slugify(name).toUpperCase();
+  return slugify(name, slugifyOptions).toUpperCase();
 };
 
 const generateNftInstance = async ({
