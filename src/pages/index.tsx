@@ -4,7 +4,7 @@ import Page from 'components/common/page';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const PageHome = dynamic(() => import('components/home/pahe-home'), { ssr: false });
+const PageHome = dynamic(() => import('components/home/page-home'), { ssr: false });
 
 const Index = () => {
   const title = 'RMRK Marketplace';

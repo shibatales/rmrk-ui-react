@@ -43,7 +43,7 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
     onDropAccepted,
     onDropRejected,
     maxFiles: 1,
-    maxSize: 10485760, // 10Mb
+    maxSize: 20971520, // 20Mb
   });
 
   const thumbs = previews.map((file) => (
@@ -77,7 +77,7 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
           justifyContent="center">
           {error && (
             <Box color="red" fontWeight={600} mb={2}>
-              {error.code === 'file-too-large' ? 'File too large. Max size is 10Mb' : error.message}
+              {error.code === 'file-too-large' ? 'File too large. Max size is 20Mb' : error.message}
             </Box>
           )}
           {displayPreview && thumbs && thumbs.length > 0 ? (

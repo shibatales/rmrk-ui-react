@@ -1,4 +1,3 @@
-import { consolidatedCollectionToInstance } from 'rmrk-tools/dist/tools/consolidator/utils';
 import { Collection } from 'rmrk-tools';
 import { decodeAddress } from '@polkadot/keyring';
 import { db } from 'lib/models/db';
@@ -44,16 +43,15 @@ export const mintCollection = async ({ collectionFields, file, transactionStatus
     const metadata = await pinMetadataFile(file, { description, name, attributes: [] });
 
     const pubKey = u8aToHex(decodeAddress(accountAddress));
-    const collection = consolidatedCollectionToInstance({
+    const collection = new Collection(
+      0,
       name,
-      block: 0,
-      max: parseInt(max),
+      parseInt(max),
       issuer,
       symbol,
-      id: Collection.generateId(pubKey, symbol),
+      Collection.generateId(pubKey, symbol),
       metadata,
-      changes: [],
-    });
+    );
 
     if (!collection) {
       transactionStatus.warning('Cannot create your collection');
