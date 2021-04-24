@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, IconButton, useToast } from '@chakra-ui/react';
 import FormHeading from 'components/create/forms/form-heading';
-import { useFieldArray, useForm, Controller, NestedValue } from 'react-hook-form';
+import { useFieldArray, useForm, NestedValue } from 'react-hook-form';
 import Input from 'components/common/inputs/input';
 import Textarea from 'components/common/inputs/textarea';
 import Dropzone from 'components/common/dropzone';
@@ -10,16 +10,16 @@ import { useTranslation } from 'next-i18next';
 import { useTransactionStatus } from 'lib/nft/transaction-status';
 import Label from 'components/common/inputs/label';
 import { AddIcon } from '@chakra-ui/icons';
-
-interface Attributes {
-  key: string;
-  value: string;
-}
+import { Attribute } from 'rmrk-tools/dist/rmrk1.0.0/classes/nft';
+import { mintNft } from 'lib/nft/mint-nft';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from 'lib/models/db';
 
 export interface NFTFormFields {
   name: string;
   description: string;
-  attributes: NestedValue<Attributes[]>;
+  attributes: NestedValue<Attribute[]>;
+  collection: string;
 }
 
 const MintNFTForm = () => {
@@ -28,10 +28,14 @@ const MintNFTForm = () => {
   const transactionStatus = useTransactionStatus('mint-nft');
   const { register, handleSubmit, errors, formState, control } = useForm<NFTFormFields>({
     defaultValues: {
-      attributes: [{ key: '', value: '' }],
+      attributes: [{ trait_type: '', value: '', display_type: 0 }],
     },
   });
-  const { fields, append, remove } = useFieldArray<Attributes>({
+  const nft = useLiveQuery(() =>
+    db.nfts.where({ collection: 'b6dd45ba18782cf43b-VINYL5' }).first(),
+  );
+  console.log('nft', nft);
+  const { fields, append, remove } = useFieldArray<Attribute>({
     control,
     name: 'attributes',
   });
@@ -53,12 +57,11 @@ const MintNFTForm = () => {
 
   const nameRequiredMessage = t('mint-nft-input-name-required');
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (nftFields: NFTFormFields) => {
     if (!formFile) {
       transactionStatus.warning('Please upload some file');
     }
-    // const ipfsUrl = await pinMetadataFile(formFile)
-    console.log(data);
+    mintNft({ nftFields, file: formFile, transactionStatus });
   };
 
   return (
@@ -72,7 +75,7 @@ const MintNFTForm = () => {
         id="mint-nft-form"
         name="mint-collection-form">
         <Box mb={4}>
-          <Dropzone setFormFile={setFormFile} />
+          <Dropzone setFormFile={setFormFile} displayPreview />
         </Box>
         <Box mb={4}>
           <FormChooseCollection register={register} />
@@ -103,9 +106,9 @@ const MintNFTForm = () => {
                 <Box mr={2}>
                   <Input
                     type="string"
-                    name={`attributes.${index}.key`}
+                    name={`attributes.${index}.trait_type`}
                     ref={register({ required: nameRequiredMessage })}
-                    placeholder="Color"
+                    placeholder="e.g. Color"
                   />
                 </Box>
 
@@ -114,14 +117,14 @@ const MintNFTForm = () => {
                     type="string"
                     name={`attributes.${index}.value`}
                     ref={register({ required: nameRequiredMessage })}
-                    placeholder="Red"
+                    placeholder="e.g. Red"
                   />
                 </Box>
                 {index === fields.length - 1 && (
                   <Box>
                     <IconButton
                       onClick={() => {
-                        append({ key: '', value: '' });
+                        append({ trait_type: '', value: '', display_type: 0 });
                       }}
                       variant="outline"
                       aria-label="Add another attribute"
