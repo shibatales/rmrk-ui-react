@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Box, SimpleGrid, useRadioGroup } from '@chakra-ui/react';
 import CreateCollectionCard from 'components/create/create-collection/create-collection-card';
 import Label from 'components/common/inputs/label';
@@ -13,20 +13,6 @@ interface IProps {
   register: UseFormMethods['register'];
 }
 
-const collections: { label: string; src: string; value: string }[] = [
-  {
-    label: 'Collection 1',
-    src: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png',
-    value: '1',
-  },
-  {
-    label: 'Collection 2',
-    src:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc9m6wTQLJVsy8DPDft5Z38YDGMmiVGhd9sVcCX1wHWFRitMdK23SeEBLhwqO8YlI9MHk&usqp=CAU',
-    value: '2',
-  },
-];
-
 const FormChooseCollection = ({ register }: IProps) => {
   const encodeduserAddress = useEncodedUserAddress();
   const userCollections = useLiveQuery(
@@ -37,8 +23,6 @@ const FormChooseCollection = ({ register }: IProps) => {
         .toArray(),
     [encodeduserAddress],
   );
-
-  console.log('userCollections', userCollections);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'collection',
