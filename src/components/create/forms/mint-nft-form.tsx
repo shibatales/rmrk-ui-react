@@ -56,6 +56,7 @@ const MintNFTForm = () => {
   }, [formState]);
 
   const nameRequiredMessage = t('mint-nft-input-name-required');
+  const optionalField = ` (${t('mint-optional')})`;
 
   const onSubmit = (nftFields: NFTFormFields) => {
     if (!formFile) {
@@ -91,14 +92,14 @@ const MintNFTForm = () => {
         </Box>
         <Box mt={4}>
           <Textarea
-            label={t('mint-nft-input-description-label')}
+            label={t('mint-nft-input-description-label') + optionalField}
             name="description"
             ref={register}
           />
         </Box>
         <Box mt={4}>
           <Box mb={1}>
-            <Label htmlFor="is-unlimited">{t('mint-nft-input-attributes-label')}</Label>
+            <Label htmlFor="is-unlimited">{t('mint-nft-input-attributes-label') + optionalField}</Label>
           </Box>
           {fields.map((item, index) => {
             return (

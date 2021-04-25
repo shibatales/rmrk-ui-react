@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { Box, Button, useColorMode, Image } from '@chakra-ui/react';
-import { FileError, FileRejection, useDropzone } from 'react-dropzone';
+import React, {useCallback, useState} from 'react';
+import {Box, Button, useColorMode, Image} from '@chakra-ui/react';
+import {FileError, FileRejection, useDropzone} from 'react-dropzone';
 import Label from 'components/common/inputs/label';
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from 'next-i18next';
 
 interface IProps {
   setFormFile: (file: File) => void;
@@ -12,10 +12,10 @@ interface IProps {
 
 type PreviewFile = File & { preview: string };
 
-const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
+const Dropzone = ({setFormFile, imageOnly, displayPreview}: IProps) => {
   const [previews, setPreviews] = useState<PreviewFile[]>([]);
   const [error, setError] = useState<FileError | null>(null);
-  const { t } = useTranslation('common');
+  const {t} = useTranslation('common');
   const isDark = useColorMode().colorMode === 'dark';
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setError(null);
@@ -37,7 +37,7 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
     setError(fileRejections[0].errors?.[0]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({
     accept: imageOnly ? 'image/*' : undefined,
     onDrop,
     onDropAccepted,
@@ -49,7 +49,7 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
   const thumbs = previews.map((file) => (
     <Box key={file.name} mt={2} display="flex">
       <Box>
-        <Image src={file.preview} width="100%" />
+        <Image src={file.preview} width="100%"/>
       </Box>
     </Box>
   ));
@@ -77,7 +77,7 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
           justifyContent="center">
           {error && (
             <Box color="red" fontWeight={600} mb={2}>
-              {error.code === 'file-too-large' ? 'File too large. Max size is 20Mb' : error.message}
+              {error.code === 'file-too-large' ? t('file-size-limit') : error.message}
             </Box>
           )}
           {displayPreview && thumbs && thumbs.length > 0 ? (
@@ -107,9 +107,11 @@ const Dropzone = ({ setFormFile, imageOnly, displayPreview }: IProps) => {
                   </Box>
                 )}
               </Box>
-              <Button mt={10}>
-                {t('dropzone-button-choose-file', { type: imageOnly ? 'image' : 'file' })}
+              <Button m={10}>
+                {t('dropzone-button-choose-file', {type: imageOnly ? 'image' : 'file'})}
               </Button>
+              <Box fontFamily="mono" fontSize="sm"><small>{t('dropzone-file-formats')}</small></Box>
+              <Box fontFamily="mono" fontSize="sm"><small>({t('dropzone-file-size-limit')})</small></Box>
             </>
           )}
         </Box>
